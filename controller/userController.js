@@ -36,17 +36,17 @@ const login = async(req, res) => {
     try{
         const {username,password} = req.body;
         if(!username || !password){
-            return res.status(400).send({error:"Bad Request"});
+            return res.status(400).json({'message':"Bad Request"});
         }
 
         const user = await userSchema.findOne({username:username});
         if(!user){
-            return res.status(404).send({error:"User not found!.."});
+            return res.status(404).json({'message':"User not found!.."});
         }
 
         const isMatch = await bcrypt.compare(password,user.password);
         if(!isMatch){
-            return res.status(401).send({error:"Password is wrong!"});
+            return res.status(401).json({'message':"Password is wrong!"});
         }
 
         const token = jwt.sign({id:user_id, username:username},
@@ -56,6 +56,10 @@ const login = async(req, res) => {
         return res.status(200).json({'message':'Login Successful!'});
 
     }catch (e) {
-        return res.status(500).send({error:"Try Again!.."});
+        return res.status(500).json({'message':"Try Again!.."});
     }
 }
+
+module.exports = {
+    register,login
+};
