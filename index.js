@@ -5,6 +5,9 @@ const {connect} = require("mongoose");
 require('dotenv').config();
 const app = express();
 const SERVER_PORT = process.env.SERVER_PORT || 3000;
+//====================================
+const UserRoute = require('./route/UserRoute');
+//====================================
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded())
@@ -25,7 +28,5 @@ try{
 app.get('/test-api', (req,res)=>{
     return res.json({"message": "Hello World"});
 })
-app.post('/create',(req,res)=>{
-    console.log(req.body);
-    return res.json({'data':req.body});
-})
+
+app.use('/api/v1/users', UserRoute);

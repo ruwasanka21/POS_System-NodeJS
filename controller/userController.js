@@ -49,11 +49,11 @@ const login = async(req, res) => {
             return res.status(401).json({'message':"Password is wrong!"});
         }
 
-        const token = jwt.sign({id:user_id, username:username},
+        const token = jwt.sign({id:user.id, username:username},
             process.env.JWT_SECRET || 'sjfsdfasdjfksfugadsfajfug',
         {expiresIn: '24h'}
         );
-        return res.status(200).json({'message':'Login Successful!'});
+        return res.status(200).json({'message':'Login Successful!',token});
 
     }catch (e) {
         return res.status(500).json({'message':"Try Again!.."});
