@@ -2,8 +2,8 @@ const ProductSchema = require('../model/productSchema');
 
 const create = async (req, res) => {
     try{
-        const{productName, unitPrice, description, image, status, qtyOnHand} = req.body;
-        if(!productName || !unitPrice || !description || !image || !status || !qtyOnHand){
+        const{productName, unitPrice, description, qtyOnHand} = req.body;
+        if(!productName || !unitPrice || !description || !qtyOnHand){
             return res.status(400).json({'message': 'Please enter valid information'});
         }
         const product = new ProductSchema({
@@ -29,7 +29,7 @@ const create = async (req, res) => {
 }
 
 const findByID = async (req, res) => {
-    const id = req.params;
+    const {id} = req.params;
     const product = await ProductSchema.findById(id);
     if(!product){
         return res.status(404).json({'message':'Product not found'});
@@ -46,6 +46,7 @@ const findAll = async (req, res) => {
         return res.status(500).json({'message':'Try Again',error:e});
     }
 }
+
 const updateProduct = async (req, res) => {
     const {id} = req.params;
     const {updateProduct} = req.body;
@@ -55,6 +56,7 @@ const updateProduct = async (req, res) => {
     }
     return res.status(200).json({'message':'Product Updated',data : product});
 }
+
 const deleteProduct = async (req, res) => {
     const {id} = req.params;
     const deletedProduct = await ProductSchema.findByIdAndDelete(id);

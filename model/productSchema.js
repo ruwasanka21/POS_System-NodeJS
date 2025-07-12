@@ -6,7 +6,7 @@ const productSchema = new mongoose.Schema({
     },
     unitPrice:{
         required: true,
-        type: String
+        type: Number
     },
     description:{
         required: true,
@@ -18,7 +18,7 @@ const productSchema = new mongoose.Schema({
     },
     status:{
         required: true,
-        type: String
+        type: Boolean
     },
     qtyOnHand:{
         required: true,
